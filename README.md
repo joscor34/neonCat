@@ -13,6 +13,6 @@ __And remember!__ don't forget to feed your NeonCat ;D
 
 
 # **DISCLAIMER**
-This tool was designed to use in cotrolled environments. I don't take any responsibility for what do you do with this tool.
+This tool was designed to use in cotrolled environments. I don't take any responsibility for what you do with this tool.
 
 Please be cool and don't do bad stuff :D
