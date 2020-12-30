@@ -1,8 +1,6 @@
-
-
 void setup() {
   // put your setup code here, to run once:
-pinMode(4,OUTPUT);
+pinMode(4,INPUT);
 pinMode(6,OUTPUT);
 pinMode(7,OUTPUT);
 pinMode(8,OUTPUT);
@@ -13,8 +11,14 @@ Serial.begin(9600);
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-int lectura_pot = analogRead(A0);
+// put your main code here, to run repeatedly:
+bool buttonState = digitalRead(4);
+Serial.println(buttonState);
+delay(300);
+if(buttonState == 1){
+  runProgram();
+}
+/*int lectura_pot = analogRead(A0);
 bool btn = digitalRead(10);
 int menu = mapeo(lectura_pot, 6);
 Serial.println(btn);
@@ -80,7 +84,7 @@ switch (menu){
       ejecute();
     }
 }
-
+*/
 }
 
 int mapeo(int valor_entrada, byte valor_salida){
