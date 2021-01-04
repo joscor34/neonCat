@@ -1,23 +1,42 @@
+#include<Encoder.h>
+
+Encoder myEnc(8,9);
+
+byte contador;
+
 void setup() {
   // put your setup code here, to run once:
-pinMode(4,INPUT);
+/*pinMode(4,INPUT);
 pinMode(6,OUTPUT);
 pinMode(7,OUTPUT);
 pinMode(8,OUTPUT);
 pinMode(9,OUTPUT);
 pinMode(10,INPUT);
-pinMode(A0,INPUT);
+pinMode(A0,INPUT);*/
 Serial.begin(9600);
 }
 
+long oldPosition = -999;
+
 void loop() {
-// put your main code here, to run repeatedly:
-bool buttonState = digitalRead(4);
-Serial.println(buttonState);
-delay(300);
-if(buttonState == 1){
-  runProgram();
-}
+  long newPosition = myEnc.read() / 4;
+  if(newPosition != oldPosition){
+    if(newPosition < oldPosition){
+      contador --;
+    }
+    if(newPosition > oldPosition){
+      contador ++;
+    }
+    oldPosition = newPosition;
+    if(contador < 1){
+      contador = 1;
+    } 
+    else if(contador > 3){
+      contador = 3;
+    }
+    Serial.println(contador);
+  }
+
 /*int lectura_pot = analogRead(A0);
 bool btn = digitalRead(10);
 int menu = mapeo(lectura_pot, 6);
