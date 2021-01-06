@@ -1,5 +1,3 @@
-//#include<Encoder.h>
-
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -10,14 +8,8 @@
 
 #define OLED_RESET     4
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
-
-
-//Encoder myEnc(8,9);
-
-//byte contador;
-
 void setup() {
- Serial.begin(9600);
+  Serial.begin(9600);
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
     Serial.println(F("SSD1306 allocation failed"));
     for(;;); 
@@ -36,30 +28,12 @@ void setup() {
   display.clearDisplay();
   display.setTextSize(2);
   display.setTextColor(SSD1306_WHITE);
-  display.println(F("alv"));
+  display.println(F("alv4"));
   display.display();  
+
 }
 
-//long oldPosition = -999;
+void loop() {
+  // put your main code here, to run repeatedly:
 
-void loop() {}
-  
-  
-  
- /* long newPosition = myEnc.read() / 4;
-  if(newPosition != oldPosition){
-    if(newPosition < oldPosition){
-      contador --;
-    }
-    if(newPosition > oldPosition){
-      contador ++;
-    }
-    oldPosition = newPosition;
-    if(contador < 1){
-      contador = 1;
-    } 
-    else if(contador > 3){
-      contador = 3;
-    }
-    Serial.println(contador);
-  }*/
+}
