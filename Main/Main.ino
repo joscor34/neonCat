@@ -1,111 +1,108 @@
-#include<Encoder.h>
+#include <SPI.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
-Encoder myEnc(8,9);
+#define GREEN     0x07E0
 
-byte contador;
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+
+#define OLED_RESET     4
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 void setup() {
-  // put your setup code here, to run once:
-/*pinMode(4,INPUT);
-pinMode(6,OUTPUT);
-pinMode(7,OUTPUT);
-pinMode(8,OUTPUT);
-pinMode(9,OUTPUT);
-pinMode(10,INPUT);
-pinMode(A0,INPUT);*/
-Serial.begin(9600);
+ pinMode(A1,INPUT);
+ Serial.begin(9600);
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); 
+  }
+  display.display();
+  delay(2000);  
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.println(F("Iniciando"));
+  display.display();
+  delay(1000);
+  display.clearDisplay();
 }
-
-long oldPosition = -999;
+int oldPosition = -30;
+int newPosition = 0;
 
 void loop() {
-  long newPosition = myEnc.read() / 4;
+  int lectPot = analogRead(A1);
+  newPosition = mapeoPot(lectPot);
   if(newPosition != oldPosition){
-    if(newPosition < oldPosition){
-      contador --;
-    }
-    if(newPosition > oldPosition){
-      contador ++;
-    }
     oldPosition = newPosition;
-    if(contador < 1){
-      contador = 1;
-    } 
-    else if(contador > 3){
-      contador = 3;
-    }
-    Serial.println(contador);
+    //Serial.println(mapeoPot(lectPot));
+    pixelPosition(mapeoPot(lectPot));
   }
-
-/*int lectura_pot = analogRead(A0);
-bool btn = digitalRead(10);
-int menu = mapeo(lectura_pot, 6);
-Serial.println(btn);
-switch (menu){
-  case 0:
-    digitalWrite(4,1);
-    digitalWrite(6,0);
-    digitalWrite(7,0);
-    digitalWrite(8,0);
-    digitalWrite(9,0);
-    if(btn == 1){
-      on_off();
-    }
-    
-    break;
- case 1:
-    digitalWrite(6,1);
-    digitalWrite(4,0);
-    digitalWrite(7,0);
-    digitalWrite(8,0);
-    digitalWrite(9,0);
-    if(btn == 1){
-      vol_up();
-    }
-    break;
- case 2:
-    digitalWrite(4,0);
-    digitalWrite(6,0);
-    digitalWrite(7,1);
-    digitalWrite(8,0);
-    digitalWrite(9,0);
-    if(btn == 1){
-      vol_down();
-    }
-    break;
- case 3:
-    digitalWrite(4,0);
-    digitalWrite(6,0);
-    digitalWrite(7,0);
-    digitalWrite(8,1);
-    digitalWrite(9,0);
-    if(btn == 1){
-      chn_up();
-    }
-    break;
- case 4:
-    digitalWrite(4,0);
-    digitalWrite(7,0);
-    digitalWrite(8,0);
-    digitalWrite(6,0);
-    digitalWrite(9,1);
-    if(btn == 1){
-      chn_down();
-    }
-    break;
- case 6:
-    digitalWrite(4,0);
-    digitalWrite(7,0);
-    digitalWrite(8,0);
-    digitalWrite(6,0);
-    digitalWrite(9,0);
-    if(btn == 1){
-      ejecute();
-    }
-}
-*/
 }
 
-int mapeo(int valor_entrada, byte valor_salida){
- return map(valor_entrada, 0, 1023, 0, valor_salida);
+int mapeoPot(int entrada){
+  int salida = map(entrada, 0, 1023, 1, 4);
+  return salida;
+}
+
+void pixelPosition(byte posicion){
+  Serial.print("La posicion es: ");
+  Serial.println(posicion);
+  switch(posicion){
+    case 1:
+      display.clearDisplay();
+      display.setCursor(20,0);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println("Menu UwU");
+      display.setCursor(20,20);
+      display.println("BAD USB");
+      display.setCursor(20,35);
+      display.println("IR hack");
+      display.setCursor(20,50);
+      display.println("RF hack");
+      display.setCursor(1,20);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println(">");
+      display.display();
+     break;
+     case 2:
+      display.clearDisplay();
+      display.setCursor(20,0);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println("Menu UwU");
+      display.setCursor(20,20);
+      display.println("BAD USB");
+      display.setCursor(20,35);
+      display.println("IR hack");
+      display.setCursor(20,50);
+      display.println("RF hack");
+      display.setCursor(1,35);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println(">");
+      display.display();
+     break;
+     case 3:
+      display.clearDisplay();
+      display.setCursor(20,0);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println("Menu UwU");
+      display.setCursor(20,20);
+      display.println("BAD USB");
+      display.setCursor(20,35);
+      display.println("IR hack");
+      display.setCursor(20,50);
+      display.println("RF hack");
+      display.setCursor(1,50);
+      display.setTextSize(2);
+      display.setTextColor(SSD1306_WHITE);
+      display.println(">");
+      display.display();
+     break;
+  }
 }
