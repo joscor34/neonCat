@@ -1,4 +1,4 @@
-#include <IRremote.h>
+/*#include <IRremote.h>
 
 IRsend irsend;
 
@@ -48,4 +48,4 @@ void chn_down() {
   Serial.print(tData,HEX);
   Serial.println(F(", 12)"));
   delay(40);
-}
+}*/
